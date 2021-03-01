@@ -1,17 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Resources;
 
 namespace TestWebAPIForFileProviders
 {
@@ -25,7 +19,7 @@ namespace TestWebAPIForFileProviders
             Configuration = configuration;
             this.environment = env;
         }
-        
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -38,8 +32,11 @@ namespace TestWebAPIForFileProviders
             #region snippet1
             var physicalProvider = environment.ContentRootFileProvider;
             var assembly = typeof(Program).Assembly;
+            var nameSpace = typeof(Program).Namespace;
 
-            var resourceKey1Value = Resource.ResourceManager.GetString("Key1");
+            //Read Resource from Resource.resx file
+            ResourceManager manager = new ResourceManager($"{nameSpace}.Resource", assembly);
+            var resourceKey1Value = manager.GetString("Key1");
 
             var manifestEmbeddedProvider = new ManifestEmbeddedFileProvider(assembly);
             var compositeProvider = new CompositeFileProvider(physicalProvider, manifestEmbeddedProvider);
