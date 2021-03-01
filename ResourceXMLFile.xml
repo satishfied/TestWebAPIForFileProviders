@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Mappings>
+	<MappingGroup Id='Group1' Name='MyGroup' GroupId='1'>
+		<FieldMapping Id="Key1" MappedValue="Value1" />
+	</MappingGroup>
+</Mappings>
